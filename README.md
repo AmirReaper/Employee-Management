@@ -76,5 +76,3 @@ Enter company name: OpenAI Inc.
 5. Show Statistics
 6. Exit
 ```
-
-میخوای برات یه **دستور گام‌به‌گام Git** هم بگم که چطور این دوتا فایل رو بسازی و پوش کنی؟
