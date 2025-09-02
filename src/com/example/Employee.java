@@ -1,19 +1,17 @@
 package com.example;
 
+import java.util.Objects;
+
 /**
- * Represents Employee with basic attributes and wage calculation methods.
+ * Abstract base class for all types of employees.
  */
-public class Employee {
+public abstract class Employee {
     private String name;
     private int baseSalary;
     private int hourlyRate;
 
-    // Static field to count number of employees created
     private static int numberOfEmployees = 0;
 
-    /**
-     * Constructor to initialize employee attributes.
-     */
     public Employee(String name, int baseSalary, int hourlyRate) {
         setName(name);
         setBaseSalary(baseSalary);
@@ -21,7 +19,14 @@ public class Employee {
         numberOfEmployees++;
     }
 
-    // --- Getters & Setters with validation ---
+    // Abstract method (must be overridden)
+    public abstract int calculateWage(int extraHours);
+
+    public int calculateWage() {
+        return calculateWage(0);
+    }
+
+    // --- Getters & Setters ---
     public String getName() { return name; }
 
     public void setName(String name) {
@@ -46,24 +51,33 @@ public class Employee {
         this.hourlyRate = hourlyRate;
     }
 
-    // --- Wage Calculation Methods ---
-    public int calculateWage() {
-        return baseSalary;
-    }
-
-    public int calculateWage(int extraHours) {
-        return baseSalary + (hourlyRate * extraHours);
-    }
-
-    // --- Static Methods ---
+    // Static counter
     public static int getNumberOfEmployees() {
         return numberOfEmployees;
     }
 
     @Override
     public String toString() {
-        return "Employee: " + name +
-                " | Base Salary: " + baseSalary +
-                " | Hourly Rate: " + hourlyRate;
+        return getClass().getSimpleName() + " { " +
+                "Name='" + name + '\'' +
+                ", BaseSalary=" + baseSalary +
+                ", HourlyRate=" + hourlyRate +
+                " }";
+    }
+
+    // Object comparison
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return baseSalary == employee.baseSalary &&
+                hourlyRate == employee.hourlyRate &&
+                Objects.equals(name, employee.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, baseSalary, hourlyRate);
     }
 }
