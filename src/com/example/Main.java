@@ -8,9 +8,9 @@ public class Main {
         Company company = new Company(companyName);
 
         // Example of upcasting & downcasting
-        Employee emp = new PartTimeEmployee("Ali", 2000, 50); // upcast
-        if (emp instanceof PartTimeEmployee) {
-            PartTimeEmployee pte = (PartTimeEmployee) emp; // downcast
+        Employee emp = new InternEmployee("Ali", 2000, 50); // upcast
+        if (emp instanceof InternEmployee) {
+            InternEmployee pte = (InternEmployee) emp; // downcast
             pte.attendTraining("Java OOP");
         }
 
