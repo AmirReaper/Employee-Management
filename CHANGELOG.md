@@ -4,6 +4,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [2.1.0] - 2025-09-27
+### Added
+- **Exception Handling System**: Comprehensive exception management throughout the application
+- **Custom Exception Classes**:
+    - `EmployeeNotFoundException`: Unchecked runtime exception for employee lookup failures
+    - `ExportException`: Checked exception for file export operation failures
+- **File Export Feature**: Export company reports to text files with proper resource management
+- **Training Management System**:
+    - Enhanced `Trainable` interface with default and static methods
+    - Training session management for employees
+    - Interactive training menu with available topics
+- **New Menu Options**:
+    - "Export Company Report": Generate and save detailed company reports
+    - "Manage Employee Training": Organize training sessions for trainable employees
+
+### Enhanced
+- **Input Validation**: Improved `InputHelper` with better error handling and new `readYesNo` method
+- **Company Class**:
+    - Added `exportCompanyReport()` method with try-with-resources
+    - Enhanced `getEmployee()` and `findHighestPaidEmployee()` with custom exceptions
+    - Added input validation in constructor
+- **Employee Classes**:
+    - `InternEmployee` and `FullTimeEmployee` now implement `Trainable` interface
+    - Overridden default methods for custom training completion messages
+- **Main Application**:
+    - Comprehensive try-catch blocks for graceful error handling
+    - New `manageEmployeeTraining()` method for interactive training sessions
+    - Better user experience with meaningful error messages
+
+### Architecture
+- **Package Structure**: Organized into `exception/`, `service/`, and `model/` packages
+- **Resource Management**: Proper file handling with try-with-resources
+- **Interface Features**: Demonstration of default and static methods in interfaces
+- **Type Safety**: Instanceof checks and safe casting for interface implementations
+
+### Learning Features
+- **Exception Types**: Practical demonstration of checked vs unchecked exceptions
+- **Custom Exceptions**: Domain-specific error handling
+- **Interface Advanced Features**: Default methods, static methods, and method overriding
+- **File I/O**: Safe file operations with exception handling
+- **User Interaction**: Interactive menu systems with validation
+
+---
+
 ## [2.0.0] - 2025-09-02
 ### Added
 - Introduced **abstract `Employee` class** to enforce a clear contract for different employee types.

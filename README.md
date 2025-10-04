@@ -1,58 +1,64 @@
-# Employee Management System
+# 👥 Employee Management System v2.1.0 – Exceptions
 
-A simple **Java console-based application** that demonstrates core **Object-Oriented Programming (OOP)** principles such as **inheritance, polymorphism, abstraction, encapsulation, overriding, upcasting & downcasting, interfaces, and final classes**.  
+This release introduces **comprehensive exception handling** to the project.
 
-This project has evolved from version **1.0.0** (basic OOP) into version **2.0.0**, which refactors the design into a more robust and extensible system.
+## ✨ New Features
+- All OOP features from v2.0.0
+- **Custom Exception Classes**:
+    - `EmployeeNotFoundException` (unchecked, runtime)
+    - `ExportException` (checked, for file operations)
+- **File Export System**: Export company reports to text files
+- **Enhanced Input Validation**: Better error handling in user interactions
+- **Try-Catch Blocks**: Proper exception handling throughout the application
+
+## 🛡️ Exception Handling Features
+- **Custom Exceptions**: Domain-specific error types for better error management
+- **Checked vs Unchecked**: Practical demonstration of both exception types
+- **Resource Safety**: Try-with-resources in file export operations
+- **User-Friendly Errors**: Clear error messages for end users
+- **Graceful Recovery**: Continue operation after handling exceptions
+
+## 📚 Learning Goals
+- Understand the difference between checked and unchecked exceptions
+- Implement custom exception classes for specific domain errors
+- Practice try-catch blocks and exception propagation
+- Learn file I/O operations with proper exception handling
+- Master defensive programming techniques
 
 ---
 
-## 🚀 Features
-
-- Add **Full-Time** and **Part-Time** employees.  
-- View all employees in the company.  
-- Calculate wages with or without overtime.  
-- Find the highest-paid employee.  
-- Show company statistics (employee count, total employees created).  
-- Demonstrates **advanced OOP concepts**:
-  - Abstract classes  
-  - Method overriding  
-  - Interfaces (simulating multiple inheritance)  
-  - Encapsulation with getters/setters  
-  - Polymorphism (treating employees uniformly)  
-  - Upcasting & downcasting  
-  - `final` usage for immutability  
-
----
-
-## 📂 Project Structure
+## 🏗️ Project Structure (v2.1.0)
 
 ```
 
-src/
-└── com/example/
-├── Main.java              # Entry point, interactive menu
-├── Company.java           # Manages employees
-├── InputHelper.java       # Handles user input safely
-├── Employee.java          # Abstract base class
-├── FullTimeEmployee.java  # Subclass for full-time employees
-├── PartTimeEmployee.java  # Subclass for part-time employees
-└── BenefitEligible.java   # Interface for multiple inheritance demo
+src/com/example/
+├── exception/           # NEW - Custom exceptions
+│   ├── EmployeeNotFoundException.java
+│   └── ExportException.java
+├── service/            # NEW - Business services
+│   ├── EmployeeReportExporter.java
+│   └── Exportable.java
+├── model/              # Enhanced models
+│   ├── Employee.java
+│   ├── FullTimeEmployee.java
+│   ├── PartTimeEmployee.java
+│   ├── InternEmployee.java
+│   └── ReportableEmployee.java
+├── Company.java        # Updated with exception handling
+├── Main.java           # Updated with try-catch blocks
+├── InputHelper.java    # Enhanced input validation
+└── HRPolicy.java
 
 ````
-
----
-
-## 🆕 Version 2.0.0 (2025-09-02)
-
-- Refactored `Employee` into an **abstract class**.  
-- Added `FullTimeEmployee` and `PartTimeEmployee` subclasses.  
-- Introduced `BenefitEligible` interface.  
-- Implemented polymorphism, overriding, and input-driven employee creation.  
-- Enhanced design with encapsulation and access modifiers.  
 
 For detailed changes, see the [CHANGELOG.md](./CHANGELOG.md).
 
 ---
+
+# 🆕 New Menu Options
+
+- Export Company Report: Generates and saves a detailed company report to file
+- Enhanced Error Handling: Better user experience with meaningful error messages
 
 ## 🛠️ Requirements
 
@@ -61,23 +67,13 @@ For detailed changes, see the [CHANGELOG.md](./CHANGELOG.md).
 
 ---
 
-## ▶️ How to Run
+## 🚀 How to Run
+```bash
+# Compile
+javac -d out src/com/example/*.java src/com/example/exception/*.java src/com/example/service/*.java src/com/example/model/*.java
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/employee-management.git
-````
-
-2. Compile the project:
-
-   ```bash
-   javac src/com/example/*.java
-   ```
-3. Run the program:
-
-   ```bash
-   java com.example.Main
-   ```
+# Run
+java -cp out com.example.Main
 
 ---
 
@@ -87,11 +83,12 @@ This project is licensed under the [MIT License](./LICENSE).
 
 ---
 
-## ✨ Future Improvements
+## 👨‍💻 Author
 
-* Add persistence (save/load employees from a file or database).
-* Implement unit tests for core functionality.
-* Add support for departments and managers.
-* Create a GUI version using JavaFX or Swing.
+**Amir Reza Tabrizi**
+
+* [GitHub Profile](https://github.com/AmirReaper)
+
+⭐ If you found this project useful, please give it a star!
 
 ```
