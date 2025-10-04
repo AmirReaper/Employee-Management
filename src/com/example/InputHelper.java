@@ -3,19 +3,11 @@ package com.example;
 import java.util.Scanner;
 
 /**
- * Utility class for safely reading user input with validation.
+ * Utility class for safely reading user input with validation and exception handling
  */
 public class InputHelper {
     private static final Scanner scanner = new Scanner(System.in);
 
-    /**
-     * Reads an integer with optional min/max validation.
-     *
-     * @param message Prompt message to display
-     * @param min Minimum valid value
-     * @param max Maximum valid value
-     * @return Valid integer input
-     */
     public static int readInt(String message, int min, int max) {
         while (true) {
             try {
@@ -32,22 +24,10 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Reads an integer without range check.
-     *
-     * @param message Prompt message
-     * @return Valid integer input
-     */
     public static int readInt(String message) {
         return readInt(message, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    /**
-     * Reads a string with validation (cannot be empty).
-     *
-     * @param message Prompt message
-     * @return Valid string input
-     */
     public static String readString(String message) {
         System.out.print(message);
         String input = scanner.nextLine().trim();
@@ -57,5 +37,18 @@ public class InputHelper {
             input = scanner.nextLine().trim();
         }
         return input;
+    }
+
+    /**
+     * NEW in v2.1.0 - Read yes/no input with exception handling
+     */
+    public static String readYesNo(String message) {
+        while (true) {
+            System.out.print(message);
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("y") || input.equals("yes")) return "yes";
+            if (input.equals("n") || input.equals("no")) return "no";
+            System.out.println("❌ Please enter 'yes' or 'no' (y/n).");
+        }
     }
 }
