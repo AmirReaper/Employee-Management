@@ -3,16 +3,17 @@ package com.example;
 import com.example.repository.EmployeeRepository;
 import com.example.util.CollectionUtils;
 import com.example.util.EmployeeComparators;
-import com.example.exception.*;
+import com.example.exception.EmployeeNotFoundException;
+import com.example.exception.ExportException;
 import com.example.service.EmployeeReportExporter;
 import com.example.model.*;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Company {
     private final String companyName;
-    private final EmployeeRepository employeeRepository; // NEW: Using generic repository
+    private final EmployeeRepository employeeRepository;
 
     public Company(String companyName) {
         if (companyName == null || companyName.trim().isEmpty()) {
@@ -26,7 +27,7 @@ public class Company {
         if (employee == null) {
             throw new IllegalArgumentException("❌ Employee cannot be null.");
         }
-        employeeRepository.add(employee); // NEW: Using repository
+        employeeRepository.add(employee);
     }
 
     public void printAllEmployees() {
@@ -37,7 +38,7 @@ public class Company {
         }
 
         int index = 1;
-        for (Employee emp : employeeRepository) { // NEW: Using Iterable
+        for (Employee emp : employeeRepository) {
             System.out.println(index++ + ". " + emp);
         }
     }
@@ -46,7 +47,7 @@ public class Company {
         if (index < 0 || index >= employeeRepository.size()) {
             throw new EmployeeNotFoundException("Employee not found at index: " + index);
         }
-        return employeeRepository.findAll().get(index); // NEW: Using repository
+        return employeeRepository.findAll().get(index);
     }
 
     public Employee findHighestPaidEmployee() {
@@ -54,7 +55,7 @@ public class Company {
             throw new EmployeeNotFoundException("No employees available for comparison.");
         }
 
-        // NEW: Using generic utility method
+
         return CollectionUtils.findMaxEmployee(
                 employeeRepository.findAll(),
                 EmployeeComparators.byTotalWage()
@@ -62,7 +63,163 @@ public class Company {
     }
 
     public int getEmployeeCount() {
-        return employeeRepository.size(); // NEW: Using repository
+        return employeeRepository.size();
+    }
+
+    /**
+     * NEW in v2.3.0 - Comprehensive Collections Framework Demo
+     */
+    public void demonstrateCollectionsFramework() {
+        System.out.println("\n🎯 Collections Framework Demo v2.3.0");
+        System.out.println("=" .repeat(50));
+
+        // 1. LIST OPERATIONS (Base - In use)
+        System.out.println("1. 📋 List Operations (Current Implementation):");
+        System.out.println("   Total employees: " + employeeRepository.size());
+        System.out.println("   Employee List: " + employeeRepository.findAll().getClass().getSimpleName());
+
+        // 2. SET OPERATIONS - Remove duplicates
+        System.out.println("\n2. 🔄 Set Operations (Remove Duplicates):");
+        Set<Employee> employeeSet = new HashSet<>(employeeRepository.findAll());
+        System.out.println("   Original list size: " + employeeRepository.size());
+        System.out.println("   Set size (no duplicates): " + employeeSet.size());
+        System.out.println("   Duplicates removed: " + (employeeRepository.size() - employeeSet.size()));
+
+        // 3. QUEUE OPERATIONS - FIFO processing
+        System.out.println("\n3. 🎯 Queue Operations (FIFO Processing):");
+        Queue<Employee> processingQueue = new LinkedList<>(employeeRepository.findAll());
+        System.out.println("   Processing queue created with " + processingQueue.size() + " employees");
+
+        int queueNumber = 1;
+        List<Employee> processedEmployees = new ArrayList<>();
+        while (!processingQueue.isEmpty()) {
+            Employee nextEmployee = processingQueue.poll();
+            processedEmployees.add(nextEmployee);
+            System.out.println("   [" + queueNumber++ + "] Processing: " + nextEmployee.getName());
+        }
+
+        // 4. MAP OPERATIONS - Quick search
+        System.out.println("\n4. 🗺️ Map Operations (Fast Lookup):");
+        Map<Integer, Employee> employeeMap = new HashMap<>();
+        Map<String, List<Employee>> employeesByType = new HashMap<>();
+
+        for (Employee emp : employeeRepository) {
+            // Map with hashCode for fast search
+            employeeMap.put(emp.hashCode(), emp);
+
+            // Grouping by employee type
+            String type = emp.getClass().getSimpleName();
+            employeesByType.computeIfAbsent(type, k -> new ArrayList<>()).add(emp);
+        }
+
+        System.out.println("   Employee Map size: " + employeeMap.size());
+        System.out.println("   Employees by type:");
+        employeesByType.forEach((type, emps) ->
+                System.out.println("     - " + type + ": " + emps.size() + " employees")
+        );
+
+        // 5. STREAM API OPERATIONS - Functional Programming
+        System.out.println("\n5. ⚡ Stream API Operations:");
+
+        // Filtering
+        List<Employee> highSalaryEmployees = employeeRepository.findAll().stream()
+                .filter(emp -> emp.getBaseSalary() > 30000)
+                .collect(Collectors.toList());
+        System.out.println("   High salary employees (>30K): " + highSalaryEmployees.size());
+
+        // Mapping
+        List<String> employeeNames = employeeRepository.findAll().stream()
+                .map(Employee::getName)
+                .collect(Collectors.toList());
+        System.out.println("   Employee names: " + employeeNames);
+
+        // Sorting with multiple criteria
+        System.out.println("\n6. 📊 Advanced Sorting:");
+        List<Employee> sortedEmployees = employeeRepository.findAll().stream()
+                .sorted(Comparator
+                        .comparing(Employee::getBaseSalary).reversed()
+                        .thenComparing(Employee::getName))
+                .collect(Collectors.toList());
+
+        System.out.println("   Top 3 employees by salary:");
+        sortedEmployees.stream().limit(3).forEach(emp ->
+                System.out.println("     - " + emp.getName() + ": $" + emp.getBaseSalary())
+        );
+
+        // 7. BULK OPERATIONS
+        System.out.println("\n7. 🔢 Bulk Operations:");
+        double totalMonthlyCost = employeeRepository.findAll().stream()
+                .mapToDouble(Employee::calculateWage)
+                .sum();
+        double averageSalary = employeeRepository.findAll().stream()
+                .mapToInt(Employee::getBaseSalary)
+                .average()
+                .orElse(0.0);
+
+        Optional<Employee> highestPaid = employeeRepository.findAll().stream()
+                .max(Comparator.comparingDouble(Employee::calculateWage));
+
+        System.out.println("   Total monthly cost: $" + totalMonthlyCost);
+        System.out.println("   Average salary: $" + averageSalary);
+        highestPaid.ifPresent(emp ->
+                System.out.println("   Highest paid: " + emp.getName() + " - $" + emp.calculateWage())
+        );
+
+        // 8. COLLECTION STATISTICS
+        System.out.println("\n8. 📈 Collection Statistics:");
+        IntSummaryStatistics salaryStats = employeeRepository.findAll().stream()
+                .mapToInt(Employee::getBaseSalary)
+                .summaryStatistics();
+
+        System.out.println("   Salary Statistics:");
+        System.out.println("     - Count: " + salaryStats.getCount());
+        System.out.println("     - Min: $" + salaryStats.getMin());
+        System.out.println("     - Max: $" + salaryStats.getMax());
+        System.out.println("     - Average: $" + salaryStats.getAverage());
+        System.out.println("     - Sum: $" + salaryStats.getSum());
+    }
+
+    /**
+     * NEW in v2.3.0 - Bulk add employees
+     */
+    public void addEmployees(List<Employee> employees) {
+        if (employees == null || employees.isEmpty()) {
+            throw new IllegalArgumentException("Employee list cannot be null or empty");
+        }
+
+        int addedCount = 0;
+        for (Employee emp : employees) {
+            try {
+                employeeRepository.add(emp);
+                addedCount++;
+            } catch (Exception e) {
+                System.out.println("❌ Failed to add employee: " + emp.getName());
+            }
+        }
+        System.out.println("✅ Added " + addedCount + " employees successfully!");
+    }
+
+    /**
+     * NEW in v2.3.0 - Find employees with complex criteria
+     */
+    public List<Employee> findEmployeesWithCriteria(int minSalary, int maxSalary, String typeFilter) {
+        return employeeRepository.findAll().stream()
+                .filter(emp -> emp.getBaseSalary() >= minSalary && emp.getBaseSalary() <= maxSalary)
+                .filter(emp -> typeFilter == null || typeFilter.isEmpty() ||
+                        emp.getClass().getSimpleName().contains(typeFilter))
+                .sorted(EmployeeComparators.bySalary().reversed())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * NEW in v2.3.0 - Get employee distribution by type
+     */
+    public Map<String, Long> getEmployeeDistribution() {
+        return employeeRepository.findAll().stream()
+                .collect(Collectors.groupingBy(
+                        emp -> emp.getClass().getSimpleName(),
+                        Collectors.counting()
+                ));
     }
 
     /**
