@@ -1,53 +1,64 @@
-# 👥 Employee Management System v2.1.0 – Exceptions
+# 👥 Employee Management System v2.2.0 – Generics
 
-This release introduces **comprehensive exception handling** to the project.
+This release introduces **comprehensive Generics** implementation throughout the application.
 
 ## ✨ New Features
-- All OOP features from v2.0.0
-- **Custom Exception Classes**:
-    - `EmployeeNotFoundException` (unchecked, runtime)
-    - `ExportException` (checked, for file operations)
-- **File Export System**: Export company reports to text files
-- **Enhanced Input Validation**: Better error handling in user interactions
-- **Try-Catch Blocks**: Proper exception handling throughout the application
+- All features from v2.1.0 (Exceptions)
+- **Generic Repository Pattern**: `Repository<T, ID>` interface and `EmployeeRepository` implementation
+- **Generic Utility Classes**: `CollectionUtils` with bounded types and wildcards
+- **Generic Comparators**: `EmployeeComparators` factory for flexible sorting
+- **Advanced Search**: Type-safe employee filtering and sorting
+- **Generic Methods**: Bounded type parameters, wildcards, and multiple type parameters
 
-## 🛡️ Exception Handling Features
-- **Custom Exceptions**: Domain-specific error types for better error management
-- **Checked vs Unchecked**: Practical demonstration of both exception types
-- **Resource Safety**: Try-with-resources in file export operations
-- **User-Friendly Errors**: Clear error messages for end users
-- **Graceful Recovery**: Continue operation after handling exceptions
+## 🏗️ Generic Architecture
+- **Repository<T, ID>**: Generic interface for type-safe data operations
+- **EmployeeRepository**: Implementation with Integer ID and Employee type
+- **CollectionUtils**: Utility methods demonstrating generics in collections
+- **Type-safe Operations**: Compile-time type checking throughout the system
 
 ## 📚 Learning Goals
-- Understand the difference between checked and unchecked exceptions
-- Implement custom exception classes for specific domain errors
-- Practice try-catch blocks and exception propagation
-- Learn file I/O operations with proper exception handling
-- Master defensive programming techniques
+- Master **Generic Types** and **Type Parameters**
+- Understand **Bounded Type Parameters** (`<T extends Employee>`)
+- Practice **Wildcards** (`<? extends Employee>`) for flexible APIs
+- Implement **Generic Methods** with multiple type parameters
+- Learn **Generic Interfaces** and their implementations
+- Explore **Type Erasure** and its implications
 
 ---
 
-## 🏗️ Project Structure (v2.1.0)
+## 🏗️ Enhanced Project Structure (v2.2.0)
 
 ```
 
-src/com/example/
-├── exception/           # NEW - Custom exceptions
-│   ├── EmployeeNotFoundException.java
-│   └── ExportException.java
-├── service/            # NEW - Business services
-│   ├── EmployeeReportExporter.java
-│   └── Exportable.java
-├── model/              # Enhanced models
-│   ├── Employee.java
-│   ├── FullTimeEmployee.java
-│   ├── PartTimeEmployee.java
-│   ├── InternEmployee.java
-│   └── ReportableEmployee.java
-├── Company.java        # Updated with exception handling
-├── Main.java           # Updated with try-catch blocks
-├── InputHelper.java    # Enhanced input validation
-└── HRPolicy.java
+employee-management-v2.2.0/
+├── src/
+│   └── com/
+│       └── example/
+│           ├── repository/                         # NEW - Generic data access layer
+│           │   ├── Repository.java                 # Generic interface
+│           │   └── EmployeeRepository.java         # Implementation
+│           ├── util/                               # NEW - Generic utilities
+│           │   ├── CollectionUtils.java            # Generic collection operations
+│           │   └── EmployeeComparators.java        # Generic comparators
+│           ├── exception/                          # Enhanced
+│           │   ├── EmployeeNotFoundException.java
+│           │   └── ExportException.java
+│           ├── service/                            # Enhanced  
+│           │   ├── EmployeeReportExporter.java
+│           │   └── Exportable.java
+│           ├── model/                              # Enhanced
+│           │   ├── Employee.java
+│           │   ├── FullTimeEmployee.java
+│           │   ├── PartTimeEmployee.java
+│           │   ├── InternEmployee.java
+│           │   ├── Trainable.java
+│           │   └── ReportableEmployee.java
+│           ├── Company.java        # Updated with generic repository
+│           ├── Main.java           # Updated with generic features
+│           ├── InputHelper.java
+│           └── HRPolicy.java
+├── README.md
+└── CHANGELOG.md
 
 ````
 
@@ -55,10 +66,10 @@ For detailed changes, see the [CHANGELOG.md](./CHANGELOG.md).
 
 ---
 
-# 🆕 New Menu Options
+# 🆕 New Menu Options (v2.2.0)
 
-- Export Company Report: Generates and saves a detailed company report to file
-- Enhanced Error Handling: Better user experience with meaningful error messages
+- Generic Features Demo: Comprehensive demonstration of all generics concepts
+- Advanced Employee Search: Type-safe filtering and sorting operations
 
 ## 🛠️ Requirements
 
@@ -69,8 +80,8 @@ For detailed changes, see the [CHANGELOG.md](./CHANGELOG.md).
 
 ## 🚀 How to Run
 ```bash
-# Compile
-javac -d out src/com/example/*.java src/com/example/exception/*.java src/com/example/service/*.java src/com/example/model/*.java
+# Compile all packages
+javac -d out src/com/example/*.java src/com/example/exception/*.java src/com/example/service/*.java src/com/example/model/*.java src/com/example/repository/*.java src/com/example/util/*.java
 
 # Run
 java -cp out com.example.Main

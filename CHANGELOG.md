@@ -4,7 +4,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [2.1.0] - 2025-09-27
+## [2.2.0] - 2025-09-28
+### Added
+- **Generic Repository Pattern**:
+    - `Repository<T, ID>` interface with type parameters for entity and identifier
+    - `EmployeeRepository` implementation with Integer ID and Employee type
+    - Generic CRUD operations: add, findById, findAll, remove, exists
+- **Generic Utility Classes**:
+    - `CollectionUtils` with bounded type parameters and wildcards
+    - `EmployeeComparators` factory for type-safe sorting strategies
+    - Generic methods: `findMax`, `swap`, `calculateTotalMonthlyCost`
+- **Advanced Generic Features**:
+    - Bounded type parameters: `<T extends Employee>`
+    - Wildcard types: `<? extends Employee>` for read-only operations
+    - Multiple type parameters: `<T, U>` in utility methods
+    - Type-safe filtering with `Class<T>` parameter
+- **New Menu Options**:
+    - "Generic Features Demo": Comprehensive generics demonstration
+    - "Advanced Employee Search": Type-safe employee filtering and sorting
+- **Enhanced Architecture**:
+    - Generic repository layer replacing simple ArrayList
+    - Type-safe employee operations throughout the system
+    - Compile-time type checking for all data operations
+
+### Enhanced
+- **Company Class**:
+    - Integrated `EmployeeRepository` for all data operations
+    - Added `demonstrateGenericFeatures()` method showcasing all generics concepts
+    - Implemented `findEmployeesByType(Class<T>)` for type-safe filtering
+    - Added `getEmployeesSortedBy()` with generic comparator support
+- **Main Application**:
+    - New `advancedEmployeeSearch()` method with type-safe operations
+    - Enhanced menu system with generics demonstrations
+    - Improved error handling with generic repository
+- **Type Safety**: Compile-time type checking throughout the application
+
+### Learning Features
+- **Generic Types**: Practical implementation of type parameters
+- **Bounded Type Parameters**: Restricting generics to specific hierarchies
+- **Wildcards**: Understanding extends and super wildcards
+- **Generic Methods**: Methods with their own type parameters
+- **Type Erasure**: Runtime behavior of generic types
+- **Generic Interfaces**: Designing flexible, reusable APIs
+
+---
+
+## [2.1.0] - 2025-09-26
 ### Added
 - **Exception Handling System**: Comprehensive exception management throughout the application
 - **Custom Exception Classes**:
