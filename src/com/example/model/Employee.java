@@ -69,8 +69,7 @@ public abstract class Employee {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Employee)) return false;
-        Employee employee = (Employee) o;
+        if (!(o instanceof Employee employee)) return false;
         return baseSalary == employee.baseSalary &&
                 hourlyRate == employee.hourlyRate &&
                 Objects.equals(name, employee.name);
